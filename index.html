@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" ng-app>
+  <head>
+    <title>Archivos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet" media="screen" />
+    <link href="css/app.css" rel="stylesheet" media="screen" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+  <div>
+
+    <h1>Sistema de Archivos</h1>
+
+
+    <div class="container" ng-controller="TestController">
+
+      <div class="row">
+        <form action="#" id="archivo" class="form">
+          <input type="text"class="span3" placeholder="Nombre" ng-model="nombre" ng-disabled="escribiendo"> 
+          <input type="number" class="span3" placeholder="Tama&ntilde;o" ng-model="peso" ng-disabled="escribiendo">
+          <input type="date" class="span3" placeholder="Fecha" ng-model="fecha" ng-disabled="escribiendo">
+          <button ng-click="agregarArchivo()" ng-disabled="escribiendo">Agregar</button>  
+        </form>
+      </div>
+      
+      <div class="row">
+        <h2>Tabla de locacion</h2>
+        <table class="table table-strip table-condensed">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tama&ntilde;o</th>
+              <th>Fecha</th>
+              <th>Locaci&oacute;n</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="archivo in archivos">
+              <td>{{ archivo.nombre }}</td>
+              <td>{{ archivo.peso }}</td>
+              <td>{{ archivo.fecha }}</td>
+              <td class="archivo-sectores">
+                <span ng-repeat="sector in archivo.locacion">{{ sector}},</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="sectores" class="row sectores">
+        <div ng-repeat="sector in sectores" ng-class="{ sector: true, actual: sector.actual, ocupado: sector.ocupado }"></div>
+      <div>
+
+    </div>
+   
+   </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-bootstrap.min.js"></script>
+    <script src="js/app-controllers.js"></script>
+  </body>
+</html>
