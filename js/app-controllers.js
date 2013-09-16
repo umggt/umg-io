@@ -1,113 +1,104 @@
 var globalScope = null;
 
-function TestController($scope, $timeout)
-{
+function TestController($scope, $timeout) {
 
-	globalScope = $scope;
+    'use strict';
 
-	$scope.escribiendo = false;
-	$scope.escritos = 0;
-	$scope.capacidadDeDisco = 500;
-	$scope.sectorActual = -1;
-	$scope.sectores = [];
-	$scope.archivos = [];
-	$scope.archivoActual = null;
+    globalScope = $scope;
 
-	$scope.agregarArchivo = function () {
+    $scope.escribiendo = false;
+    $scope.escritos = 0;
+    $scope.capacidadDeDisco = 500;
+    $scope.sectorActual = -1;
+    $scope.sectores = [];
+    $scope.archivos = [];
+    $scope.archivoActual = null;
 
-		var archivoActual = {
-			nombre: $scope.nombre,
-			peso: $scope.peso,
-			fecha: $scope.fecha,
-			locacion: []
-		};
+    $scope.agregarArchivo = function () {
 
-		$scope.archivos.push(archivoActual);
+        var archivoActual = {
+            nombre: $scope.nombre,
+            peso: $scope.peso,
+            fecha: $scope.fecha,
+            locacion: []
+        };
 
-		console.log($scope.archivos);
+        $scope.archivos.push(archivoActual);
 
-		$scope.archivoActual = archivoActual;
+        $scope.archivoActual = archivoActual;
 
-		$scope.escribiendo = true;
+        $scope.escribiendo = true;
 
-	};
+    };
 
- 	function inicializarSectores() {
+    function inicializarSectores() {
+        for (var i = 0; i < $scope.capacidadDeDisco; i++) {
 
- 		for (var i = 0; i < $scope.capacidadDeDisco; i++) {
+            var sector = { 
+                id: i, 
+                ocupado: false, 
+                actual: false, 
+                color: 255, 
+                siguiente: null,
+            };
 
- 			var sector = { 
- 				id: i, 
- 				ocupado: false, 
- 				actual: false, 
- 				color: 255, 
- 				siguiente: null,
- 			};
+            $scope.sectores.push(sector);
+        };
 
- 			$scope.sectores.push(sector);
- 		};
+    }
 
-	};
+    function marcarSectorActual() {
 
-	function marcarSectorActual() {
+        if ($scope.sectorActual === $scope.sectores.length - 1) {
+            $scope.sectorActual = -1;
+        }
 
-		if ($scope.sectorActual === $scope.sectores.length - 1) {
-			$scope.sectorActual = -1;
-		}
+        var actualIndex = ++$scope.sectorActual;
+        var actual = $scope.sectores[actualIndex];
+        actual.actual = true;
 
-		var actualIndex = ++$scope.sectorActual;
+        if ($scope.escribiendo && !actual.ocupado) {
 
+            console.log('escribiendo ' + actualIndex + '...');
 
+            actual.ocupado = true;
+            $scope.escritos++;
+            $scope.archivoActual.locacion.push(actualIndex);
 
-		var actual = $scope.sectores[actualIndex];
-		actual.actual = true;
-
-		if ($scope.escribiendo && !actual.ocupado) {
-
-			console.log('escribiendo ' + actualIndex + '...');
-
-			if ($scope.escritos === 0) {
-				// Es el primer sector del archivo, agregarlo a la tabla.
-			}
-
-			actual.ocupado = true;
-			$scope.escritos++;
-			$scope.archivoActual.locacion.push(actualIndex);
-
-			if ($scope.escritos >= parseInt($scope.peso)) {
-				$scope.escritos = 0;
-				$scope.nombre = null;
-				$scope.peso = null;
-				$scope.fecha = null;
-				$scope.escribiendo = false;
-				//$scope.archivoActual = null;
-			}
-		}
+            if ($scope.escritos >= parseInt($scope.peso)) {
+                $scope.escritos = 0;
+                $scope.nombre = null;
+                $scope.peso = null;
+                $scope.fecha = null;
+                $scope.escribiendo = false;
+                $scope.archivoActual = null;
+            }
+        }
 
 
-		if (actualIndex === 0) {
-			var ultimoIndex = $scope.sectores.length - 1;
-			var ultimo = $scope.sectores[ultimoIndex];
-			ultimo.actual = false;
-		}
-		else {
-			var anteriorIndex = actualIndex - 1;
-			var anterior = $scope.sectores[anteriorIndex]; 
-			anterior.actual = false;	
-		}
+        if (actualIndex === 0) {
+            var ultimoIndex = $scope.sectores.length - 1;
+            var ultimo = $scope.sectores[ultimoIndex];
+            ultimo.actual = false;
+        }
+        else {
+            var anteriorIndex = actualIndex - 1;
+            var anterior = $scope.sectores[anteriorIndex]; 
+            anterior.actual = false;    
+        }
 
-		$timeout(marcarSectorActual, 1);
-	}
+        $timeout(marcarSectorActual, 1);
+    }
 
-	function constructor() {
-		inicializarSectores();
-		marcarSectorActual();
-	}
+    function constructor() {
+        inicializarSectores();
+        marcarSectorActual();
+    }
 
-	constructor();
+    constructor();
 
 }
 
 $(function(){
-	//$('input[type=date]').datepicker();
+    //$('input[type=date]').datepicker();
 });
