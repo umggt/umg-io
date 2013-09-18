@@ -70,7 +70,7 @@ function TestController($scope, $timeout) {
 
         if ($scope.archivos.length > 0) {
             for (var i = 0; i < $scope.archivos.length; i++) {
-                var archivo = $scope.archivos[i];                
+                var archivo = $scope.archivos[i];
                 for (var j = 0; j < archivo.locacion.length; j++) {
                     var sector = archivo.locacion[j];
                     $scope.sectores[sector].ocupado = true;
