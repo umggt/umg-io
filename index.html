@@ -17,11 +17,17 @@
   </head>
   <body>
 
-  <div>
+  
 
-    <h1>Sistema de Archivos</h1>
+   <div class="panel panel-primary content-wrap">
 
+  <div class="panel-heading">
+          <h2>Sistema de Archivos</h2>
+      </div>
+<br/>
+<br/>
 
+<div class="subcontent">
     <div class="container" ng-controller="TestController">
 
       <div class="row">
@@ -29,18 +35,20 @@
           <input type="text" class="span3" placeholder="Nombre" ng-model="nombre" ng-disabled="escribiendo" /> 
           <input type="number" class="span3" placeholder="Tama&ntilde;o" ng-model="peso" ng-disabled="escribiendo" />
           <input type="date" class="span3" placeholder="Fecha" ng-model="fecha" ng-disabled="escribiendo" />
-          <button ng-click="agregarArchivo($event)" ng-disabled="escribiendo">Agregar</button>  
+          <button ng-click="agregarArchivo($event)" ng-disabled="escribiendo" class="btn btn-success">Agregar</button>  
         </form>
       </div>
       
       <div class="row">
-        <h2>Tabla de locacion</h2>
-        <table class="table table-strip table-condensed">
+          <legend><h3>Tabla de Locaci&oacute;n</h3> </legend>
+        <table class="table table-strip table-condensed table-hover">
           <thead>
             <tr>
+               <th></th>
               <th>Nombre</th>
               <th>Tama&ntilde;o</th>
               <th>Fecha</th>
+			  <th>Color</th>
               <th>Locaci&oacute;n</th>
             </tr>
           </thead>
@@ -58,14 +66,18 @@
           </tbody>
         </table>
       </div>
-
+<legend><h3>Sectores</h3></legend>
       <div id="sectores" class="row sectores">
         <div ng-repeat="sector in sectores" ng-class="{ sector: true, actual: sector.actual, ocupado: sector.ocupado }" style="background-color: {{ sector.color }}"></div>
       </div>
 
+  <br/>
+		<br/>
     </div>
+	</div>
    
    </div>
+	</div>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
