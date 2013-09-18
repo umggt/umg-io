@@ -10,6 +10,7 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
+      <script src="js/json2.min.js"></script>
       <script src="js/html5shiv.min.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
@@ -25,10 +26,10 @@
 
       <div class="row">
         <form action="#" id="archivo" class="form">
-          <input type="text"class="span3" placeholder="Nombre" ng-model="nombre" ng-disabled="escribiendo"> 
-          <input type="number" class="span3" placeholder="Tama&ntilde;o" ng-model="peso" ng-disabled="escribiendo">
-          <input type="date" class="span3" placeholder="Fecha" ng-model="fecha" ng-disabled="escribiendo">
-          <button ng-click="agregarArchivo()" ng-disabled="escribiendo">Agregar</button>  
+          <input type="text" class="span3" placeholder="Nombre" ng-model="nombre" ng-disabled="escribiendo" /> 
+          <input type="number" class="span3" placeholder="Tama&ntilde;o" ng-model="peso" ng-disabled="escribiendo" />
+          <input type="date" class="span3" placeholder="Fecha" ng-model="fecha" ng-disabled="escribiendo" />
+          <button ng-click="agregarArchivo($event)" ng-disabled="escribiendo">Agregar</button>  
         </form>
       </div>
       
@@ -45,9 +46,11 @@
           </thead>
           <tbody>
             <tr ng-repeat="archivo in archivos">
+              <td> <a href="#" ng-click="eliminar(archivo, $event)">x</a> </td>
               <td>{{ archivo.nombre }}</td>
               <td>{{ archivo.peso }}</td>
               <td>{{ archivo.fecha }}</td>
+              <td style="background: {{ archivo.color }}">{{ archivo.color }}</td>
               <td class="archivo-sectores">
                 <span ng-repeat="sector in archivo.locacion">{{ sector}},</span>
               </td>
@@ -57,8 +60,8 @@
       </div>
 
       <div id="sectores" class="row sectores">
-        <div ng-repeat="sector in sectores" ng-class="{ sector: true, actual: sector.actual, ocupado: sector.ocupado }"></div>
-      <div>
+        <div ng-repeat="sector in sectores" ng-class="{ sector: true, actual: sector.actual, ocupado: sector.ocupado }" style="background-color: {{ sector.color }}"></div>
+      </div>
 
     </div>
    
@@ -68,6 +71,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-bootstrap.min.js"></script>
+    <script src="js/amplify.min.js"></script>
     <script src="js/app-controllers.js"></script>
   </body>
 </html>

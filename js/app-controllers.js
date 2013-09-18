@@ -1,33 +1,92 @@
-var globalScope = null;
-
 function TestController($scope, $timeout) {
 
     'use strict';
 
-    globalScope = $scope;
-
     $scope.escribiendo = false;
     $scope.escritos = 0;
-    $scope.capacidadDeDisco = 500;
+    $scope.capacidadDeDisco = amplify.store('capacidadDeDisco') || 500;
     $scope.sectorActual = -1;
     $scope.sectores = [];
-    $scope.archivos = [];
+    $scope.archivos = amplify.store('archivos') || [];
     $scope.archivoActual = null;
+    $scope.rojo = amplify.store('rojo') || 0;
+    $scope.verde = amplify.store('verde') || 0;
+    $scope.azul = amplify.store('azul') || 0;
 
-    $scope.agregarArchivo = function () {
+    $scope.calcularColor = function() {
+
+        $scope.azul += 20;
+        $scope.verde += 20;
+        $scope.rojo += 20;
+
+        if ($scope.azul > 255) {
+            $scope.azul = 1;
+        }
+
+        if ($scope.verde > 255) {
+            $scope.verde = 1;
+        }
+
+        if ($scope.rojo > 255) {
+            $scope.rojo = 1;
+        }
+
+        amplify.store('rojo', $scope.rojo); 
+        amplify.store('verde', $scope.verde); 
+        amplify.store('azul', $scope.azul); 
+        
+    };
+
+    $scope.obtenerColorHex = function() {
+
+        return '#' + Math.floor(Math.random()*16777215).toString(16);
+        /*$scope.calcularColor();
+
+        var rojo = $scope.rojo.toString(16); 
+        var verder = $scope.verde.toString(16); 
+        var azul = $scope.azul.toString(16);
+
+        rojo = rojo.length == 1 ? '0' + rojo.length : rojo;
+        verder = verder.length == 1 ? '0' + verder.length : verder;
+        azul = azul.length == 1 ? '0' + azul.length : azul;
+
+        var color = rojo + verder + azul;
+        return '#' + color;*/
+
+    };
+
+    $scope.eliminar = function (archivo, $event) {
+        $scope.archivos.pop(archivo);
+
+        for (var i = 0; i < archivo.locacion.length; i++) {
+            var sector = archivo.locacion[i];
+            $scope.sectores[sector].color = 255;
+            $scope.sectores[sector].ocupado = false;
+        };
+
+        amplify.store('archivos', $scope.archivos);
+        $event.preventDefault();
+    };
+
+    $scope.agregarArchivo = function ($event) {
 
         var archivoActual = {
             nombre: $scope.nombre,
             peso: $scope.peso,
             fecha: $scope.fecha,
+            color: $scope.obtenerColorHex(),
             locacion: []
         };
+
+        console.log(archivoActual.color);
 
         $scope.archivos.push(archivoActual);
 
         $scope.archivoActual = archivoActual;
 
         $scope.escribiendo = true;
+
+        $event.preventDefault();
 
     };
 
@@ -44,6 +103,17 @@ function TestController($scope, $timeout) {
 
             $scope.sectores.push(sector);
         };
+
+        if ($scope.archivos.length > 0) {
+            for (var i = 0; i < $scope.archivos.length; i++) {
+                var archivo = $scope.archivos[i];
+                for (var j = 0; j < archivo.locacion.length; j++) {
+                    var sector = archivo.locacion[j];
+                    $scope.sectores[sector].ocupado = true;
+                    $scope.sectores[sector].color = archivo.color;
+                };
+            };
+        }
 
     }
 
@@ -62,6 +132,7 @@ function TestController($scope, $timeout) {
             console.log('escribiendo ' + actualIndex + '...');
 
             actual.ocupado = true;
+            actual.color = $scope.archivoActual.color;
             $scope.escritos++;
             $scope.archivoActual.locacion.push(actualIndex);
 
@@ -72,6 +143,7 @@ function TestController($scope, $timeout) {
                 $scope.fecha = null;
                 $scope.escribiendo = false;
                 $scope.archivoActual = null;
+                amplify.store('archivos', $scope.archivos);
             }
         }
 
