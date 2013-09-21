@@ -1,12 +1,5 @@
 <!DOCTYPE html>
 <html lang="es" ng-app>
-<ul class="nav nav-tabs">
-   <li  class="active"><a href="index.html">Simulador de Archivos</a></li>
-  <li><a href="datos.html">Datos</a></li>
-</ul>
-
-<br/>
-<br/>
   <head>
     <title>Simulador de Archivos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,18 +17,33 @@
   </head>
   <body>
 
-  
-
-   <div class="panel panel-primary content-wrap">
-
-  <div class="panel-heading">
-          <h2>Sistema de Archivos</h2>
+  <div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Simulador de archivos</a>
       </div>
-<br/>
-<br/>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li  class="active"><a href="index.html">Simulador de Archivos</a></li>
+          <li><a href="datos.html">Datos</a></li>
+        </ul>          
+      </div>
+    </div>
+  </div>
 
-<div class="subcontent">
     <div class="container" ng-controller="TestController">
+
+     <div class="panel panel-primary content-wrap">
+         <div class="panel-heading">
+             <h2>Sistema de Archivos</h2>
+         </div>
+     </div>
+
 
       <div class="row">
         <form action="#" id="archivo" class="form">
@@ -73,18 +81,12 @@
           </tbody>
         </table>
       </div>
-<legend><h3>Sectores</h3></legend>
+      <h3>Sectores</h3>
+        
       <div id="sectores" class="row sectores">
         <div ng-repeat="sector in sectores" ng-class="{ sector: true, actual: sector.actual, ocupado: sector.ocupado }" style="background-color: {{ sector.color }}"></div>
       </div>
-
-  <br/>
-		<br/>
     </div>
-	</div>
-   
-   </div>
-	</div>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

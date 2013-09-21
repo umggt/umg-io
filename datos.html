@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" ng-app>
 
-<ul class="nav nav-tabs">
-   <li><a href="index.html">Simulador de Archivos</a></li>
-  <li  class="active"><a href="datos.html">Datos</a></li>
-
-</ul>
-<br/>
-<br/>
  <head>
     <title>Simulador de Archivos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,17 +12,34 @@
 	
 <body>
 
-   <div class="panel panel-primary content-wrap">
-
-  <div class="panel-heading">
-         <h2>Sistemas Operativos</h2>
+  <div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Simulador de archivos</a>
       </div>
-<br/>
-<br/>
-
-<div class="subcontent">
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Simulador de Archivos</a></li>
+          <li class="active"><a href="datos.html">Datos</a></li>
+        </ul>          
+      </div>
+    </div>
+  </div>
+    
  <div class="container" >
-  <div class="row">
+
+     <div class="panel panel-primary content-wrap">
+         <div class="panel-heading">
+            <h2>Sistemas Operativos</h2>
+         </div>
+     </div>
+     
+     <div class="row">
           <legend><h3>Datos Integrantes</h3> </legend>
         <table class="table table-strip table-condensed table-hover">
           <thead>
@@ -58,13 +68,12 @@
         </table>
       </div>
 
-</div>
-</div>
+    </div>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/json2.min.js"></script>
       <script src="js/html5shiv.min.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
-  </head>
+</body>
 </html>
